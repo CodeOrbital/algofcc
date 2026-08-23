@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+    .btn{
+      transition: 0.1s;
+      border: solid 1px;
+      width: 70px;
+      padding: 3px;
+    }
+    .btn:active{
+      transform: scale(0.95)
+    }
+  </style>
+</head>
+
+<body>
+  <form onsubmit="show(); event.preventDefault()" >
+    <div>
+      <label for="text">"Insert a text below to see if the vowels are balanced."</label>
+      <br>
+      <input id="text" type="text" name="text">
+    </div>
+    <button class="btn" type="submit">Are the vowels balanced?</button>
+  </form>
+  <p>The word has <span id="result">what kind of</span> vowels <span id="rq">?</span></p>
+  
+  
+  
+  
+  <script>
+    let body = document.querySelector('body')
+    let bc = Array.from(body.children)
+    bc.forEach(function(c){c.style.textAlign='center'})
+    let BTN = document.getElementsByClassName('btn')
+    let btn = Array.from(BTN)
+    btn.forEach(b => b.style.margin='10px auto')
+    let rq=document.getElementById('rq')
+    function isBalanced() {
+      let s=document.getElementsByName('text')[0].value;
+      s=s.toLowerCase();
+      let l=s.length;
+      let h;
+      let f;
+      let la;
+      if(l<2){
+        s="you should enter a text with more than one letter"
+        return s
+      }
+      else if (l%2==0){
+        h=l/2;
+        f=s.slice(0,h);
+        la=s.slice(h);
+      } else{
+        h=(l-1)/2;
+        f=s.slice(0,h);
+        la=s.slice(h+1);
+      }
+      let fc = 0;
+      let lc = 0;
+      let vowel=["a","e","i","o","u"];
+      for(let c=0; c<h; c++){
+        if(vowel.includes(f[c])){
+          fc++
+        }
+      }
+      for(let c=0; c<h; c++){
+        if(vowel.includes(la[c])){
+          lc++
+        }
+      }
+      if(fc==lc){
+        s=true;
+      }else{
+        s=false;
+      }
+      return s;
+      }
+    function show(){
+      rq.remove()
+      let r=document.getElementById('result')
+      let rp = r.parentElement
+      if (isBalanced()==true){
+        r.textContent='balanced'
+        r.style.fontWeight='bold'
+        rp.style.color='green'
+      }
+      else if(isBalanced()==false){
+        r.textContent='unbalanced'
+        r.style.fontWeight='bold'
+        rp.style.color='red'
+      }else {
+        window.alert('Alert! \n'+isBalanced())
+      }
+    }
+  </script>
+</body>
+
+</html>
